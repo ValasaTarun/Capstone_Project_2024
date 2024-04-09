@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IOT Devices</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>IOT Devices</h2>
+        <div class="header">
+            <div class="nav">
+                <a href="{{ url_for('home') }}">Home</a>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            </div>
+        </div>
+        <div class="devices">
+            {% if devices|length != 0 %}
+                    {% for device in devices %}
+                    <div class="device-box">
+                        <h3>{{ device[1] }}</h3>
+                        <p>{{ device[2] }}</p>
+                    </div>
+                    {% endfor %}
+            {% else %}
+            <center>
+                <h2>No Devices to SHOW</h2>
+            </center>
+            {% endif %}
+
+
+        </div>
+    </div>
+</body>
+</html>

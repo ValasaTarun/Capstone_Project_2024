@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment</title>
+    <link rel="stylesheet" type="text/css" href="../static/assignment.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Assignment for {{ user_name[0] }}</h1>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Device Name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for device in devices %}
+                    <tr>
+                        <td>{{ device[1] }}</td>
+                        <td>
+                            {% if device[0] not in user_devices %}
+                                <a href="/add_device/{{user_name[1]}}/{{ device[0] }}">Add</a>
+                            {% else %}
+                                <a href="/remove_device/{{user_name[1]}}/{{ device[0] }}">Remove</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
