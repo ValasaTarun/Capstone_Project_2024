@@ -8,10 +8,19 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         /* Optional: Add custom styles here */
+        .logout-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Logout Button -->
+        <a href="/logout" class="btn btn-danger logout-btn">Logout</a>
+        
         <h1 class="mt-5">Admin Devices and Users</h1>
 
         <!-- Devices List -->
@@ -63,43 +72,41 @@
         </div>
 
         <!-- Users List -->
-<!-- Users List -->
-<h2 class="mt-5">Users List</h2>
-<table class="table table-bordered">
-    <thead class="thead-dark">
-        <tr>
-            <th>Serial Number</th>
-            <th>User Name</th>
-            <th>Role</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for key , user in users.items() %}
-            <tr>
-                <td>{{ key }}</td>
-                <td><a href="/assignment/{{ user[0] }}">{{ user[1] }}</a></td>
-                <td>
-                    <form action="/admin/update_role" method="POST">
-                        <input type="hidden" name="user_id" value="{{ user[0] }}">
-                        <select name="role">
-                            <option value="GUEST" {% if user[2] == 'GUEST' %} selected {% endif %}>GUEST</option>
-                            <option value="ADMIN" {% if user[2] == 'ADMIN' %} selected {% endif %}>ADMIN</option>
-                        </select>
-                        <button type="submit" class="btn btn-primary">Update</button>
-                    </form>
-                </td>
-                <td>
-                    <form action="/admin/delete_user" method="POST">
-                        <input type="hidden" name="user_id" value="{{ user[0] }}">
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                </td>
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
+        <h2 class="mt-5">Users List</h2>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Serial Number</th>
+                    <th>User Name</th>
+                    <th>Role</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key , user in users.items() %}
+                    <tr>
+                        <td>{{ key }}</td>
+                        <td><a href="/assignment/{{ user[0] }}">{{ user[1] }}</a></td>
+                        <td>
+                            <form action="/admin/update_role" method="POST">
+                                <input type="hidden" name="user_id" value="{{ user[0] }}">
+                                <select name="role">
+                                    <option value="GUEST" {% if user[2] == 'GUEST' %} selected {% endif %}>GUEST</option>
+                                    <option value="ADMIN" {% if user[2] == 'ADMIN' %} selected {% endif %}>ADMIN</option>
+                                </select>
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="/admin/delete_user" method="POST">
+                                <input type="hidden" name="user_id" value="{{ user[0] }}">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </body>
 </html>

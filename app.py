@@ -39,7 +39,10 @@ def login():
 
         if authenticate_admin(username, password):
             session['role'] = 'admin'
-            return redirect(url_for('admin'))
+            otp = generate_otp()
+            session['otp'] = otp
+            # return redirect(url_for('admin'))
+            return redirect(url_for('verify_otp'))
         
         if authenticate(username, password):
             # Generate and store OTP in session
@@ -77,7 +80,10 @@ def verify_otp():
         if otp_entered == session['otp']:
             # OTP verification successful, proceed to home page
             session['logged_in'] = True
-            return redirect(url_for('home'))
+            if session.get('role') == 'admin':
+                return redirect(url_for('admin'))  # Redirect admin to admin page
+            else:
+                return redirect(url_for('home'))
         else:
             return render_template('verify_otp.html', message='Invalid OTP')
     return render_template('verify_otp.html')
