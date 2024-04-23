@@ -1,0 +1,16 @@
+Tools and Frameworks
+Flask Framework :
+Flask is one of the best tools that is very common in web framework development as it is simple and flexible at the same time. Among others, Flask is slimmer than the ones that are bulky as it is microframework - this means it offers a basic structure upon which mostly external libraries are used for additional functions like database and forms. This way you may have customizable app development and more light app in making. Flask stands out thanks to its user-friendliness, thus is suitable for beginners. Besides, it is reusable for advanced developers as it is a product that can be used for simple and complex applications.
+
+Jinga2 template Engine :
+Jinga2 is a widely used Python library, which is designed to make the creation of web pages as uncomplicated as possible. It lets you create a predefined structure with specific placeholders. We just need to replace those placeholders with appropriate data from your program to obtain the required HTML. Since the website and python code are independent, this makes the layout of the website simple to edit and maintain.
+
+Sqlite3 :
+Sqlite3 is a lightweight, embeddable database engine written in C that allows developers to store data within their applications. Unlike traditional database servers, Sqlite3 doesn't require a separate server process and stores data in a single file, making it ideal for mobile devices and applications where simplicity and efficiency are key. 
+
+
+Data Storage :
+SQL and NoSQL databases are two main types of databases. SQL databases, like MySQL, use structured tables for data storage, ensuring integrity and reliability. NoSQL databases, such as MongoDB, offer flexibility for unstructured data but lack the structured querying capabilities of SQL databases. For this application, which involves managing structured data like user-device relationships, SQL databases are more suitable due to their support for complex relationships and transactional integrity.
+
+Development Process:
+The development process began with requirements gathering, followed by system architecture and database design. Using an agile approach, the application was incrementally developed, focusing on core features first. Continuous testing, feedback, and version control using Git ensured quality and collaboration. Deployment and post-deployment tasks concluded the process, ensuring smooth production.
