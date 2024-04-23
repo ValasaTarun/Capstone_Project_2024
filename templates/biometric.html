@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biometric Verification</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+    <script>
+        document.addEventListener('keypress', function(event) {
+            if (event.key === 'a' || event.key === 'A') {
+                document.getElementById('message').innerText = 'Please try again or wrong fingerprint';
+            } else if (event.key === 'z' || event.key === 'Z') {
+                {% if session['role'] == 'admin' %}
+                setTimeout(function() {
+                    window.location.href = "/admin";  // Redirect to admin page after 3 seconds
+                }, 3000);
+                document.getElementById('message').innerText = 'Redirecting you in 3 seconds';
+                setTimeout(function() {
+                    document.getElementById('message').innerText = 'Redirecting you in 2 seconds';
+                }, 1000);
+                setTimeout(function() {
+                    document.getElementById('message').innerText = 'Redirecting you in 1 second';
+                }, 2000);
+                {% else %}
+                setTimeout(function() {
+                    window.location.href = "/home";  // Redirect to home page or any other appropriate page for guest users after 3 seconds
+                }, 3000);
+                document.getElementById('message').innerText = 'Redirecting you in 3 seconds';
+                setTimeout(function() {
+                    document.getElementById('message').innerText = 'Redirecting you in 2 seconds';
+                }, 1000);
+                setTimeout(function() {
+                    document.getElementById('message').innerText = 'Redirecting you in 1 second';
+                }, 2000);
+                {% endif %}
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="bio-box">
+            <h2>Please place your finger on the sensor</h2>
+            <p id="message"></p>
+        </div>
+    </div>
+</body>
+</html>

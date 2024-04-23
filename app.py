@@ -70,23 +70,46 @@ def authenticate_admin(username, password):
     
     return False
 
+@app.route('/biometric', methods=['GET', 'POST'])
+def biometric():
+    return render_template('biometric.html')
+
+
+# # Route for OTP verification page
+# @app.route('/verify-otp', methods=['GET', 'POST'])
+# def verify_otp():
+#     if 'otp' not in session:
+#         return redirect(url_for('login'))
+#     if request.method == 'POST':
+#         otp_entered = request.form['otp']
+#         if otp_entered == session['otp']:
+#             # OTP verification successful, proceed to home page
+#             session['logged_in'] = True
+#             if session.get('role') == 'admin':
+#                 return redirect(url_for('admin'))  # Redirect admin to admin page
+#             else:
+#                 return redirect(url_for('home'))
+#         else:
+#             return render_template('verify_otp.html', message='Invalid OTP')
+#     return render_template('verify_otp.html')
+
 # Route for OTP verification page
-@app.route('/verify-otp', methods=['GET', 'POST'])
+@app.route('/verify_otp', methods=['GET', 'POST'])
 def verify_otp():
     if 'otp' not in session:
         return redirect(url_for('login'))
+
     if request.method == 'POST':
         otp_entered = request.form['otp']
         if otp_entered == session['otp']:
-            # OTP verification successful, proceed to home page
+            # OTP verification successful, proceed to biometric page
             session['logged_in'] = True
-            if session.get('role') == 'admin':
-                return redirect(url_for('admin'))  # Redirect admin to admin page
-            else:
-                return redirect(url_for('home'))
+            return redirect(url_for('biometric'))
         else:
             return render_template('verify_otp.html', message='Invalid OTP')
+    
     return render_template('verify_otp.html')
+
 
 # Route for home page
 @app.route('/home')
