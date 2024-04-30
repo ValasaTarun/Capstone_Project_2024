@@ -25,12 +25,13 @@ app.config['MAIL_USE_TLS'] = True
 mail = Mail(app)
 
 
-TO_EMAIL = "test@gmail.com"
+TO_EMAIL = "keerthangopu34@gmail.com"
 
 
 def generate_otp():
     return ''.join(random.choices(string.digits, k=6))
     
+
 @app.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -41,9 +42,7 @@ def login():
             session['role'] = 'admin'
             otp = generate_otp()
             session['otp'] = otp
-            print(username,otp)
-            send_otp_email(username, otp)
-            
+
             return redirect(url_for('verify_otp'))
         
         if authenticate(username, password):
@@ -52,9 +51,7 @@ def login():
             session['otp'] = otp
             session['username'] = username
 
-            
-            send_otp_email(username, otp)
-            
+
             return redirect(url_for('verify_otp'))
         else:
             return render_template('login.html', message='Invalid username or password')
@@ -65,6 +62,7 @@ def authenticate_admin(username, password):
     
     if user is None:
         return False  
+    
     
     if user[4] == 'ADMIN' and bcrypt.checkpw(password.encode('utf-8'), user[2]):
         return True
@@ -95,8 +93,8 @@ def biometric():
             store_fingerprint(data_received,user_id)
             
             usb.util.dispose_resources(device)
-    
     return render_template('biometric.html')
+
 
 
 @app.route('/verify_otp', methods=['GET', 'POST'])
@@ -107,6 +105,7 @@ def verify_otp():
     if request.method == 'POST':
         otp_entered = request.form['otp']
         if otp_entered == session['otp']:
+            
             session['logged_in'] = True
             return redirect(url_for('biometric'))
         else:
@@ -121,7 +120,7 @@ def home():
     if 'logged_in' not in session or not session['logged_in']:
         return redirect(url_for('login'))
     user = get_user_by_username(session['username'])
-    
+
     devices = database.get_devices_for_user(0,user)
     print(devices,'from db file')
     user_devices = []
@@ -140,6 +139,7 @@ def register():
         username = request.form['username']
         password = request.form['password']
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+        
         
         if not add_user(username, hashed_password):
             message = "Username is already taken. Please try another one."
@@ -224,24 +224,37 @@ def update_role():
 @app.route('/add_device/<int:user_id>/<int:device_id>')
 def add_device(user_id,device_id):
     
+    
+    
+    
+
+    
     database.add_device_to_user(user_id, device_id)
     return redirect(url_for('assignment', userid=user_id))
 
 
 @app.route('/remove_device/<int:user_id>/<int:device_id>',methods=['GET'])
 def remove_device(user_id,device_id):
+    
+    
+    
+    
 
+    
     database.remove_device_from_user(user_id, device_id)
     return redirect(url_for('assignment', userid=user_id))
 
 
 @app.route('/assignment/<int:userid>',methods=['GET'])
 def assignment(userid):
+    
     user_name = database.get_user_name(userid)
     devices = database.get_devices_for_user(userid)
     print('------------------')
-    return render_template('assignment.html', user_name=[user_name,userid], devices=devices[0],user_devices =  list(map(int,devices[1].split(','))) if len(devices[1]) != 0 else [])
     
+    return render_template('assignment.html', user_name=[user_name,userid], devices=devices[0],user_devices =  list(map(int,devices[1].split(','))) if len(devices[1]) != 0 else [])
+
+
 def send_otp_email(username, otp):
     msg = Message('Your OTP for Two-Factor Authentication', sender='app-testt@outlook.com', recipients=[username, TO_EMAIL])
     msg.body = f'Your OTP is: {otp}'
